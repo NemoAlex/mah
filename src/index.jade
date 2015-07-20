@@ -1,0 +1,126 @@
+extend include/layout
+block content
+  #mah_main
+    .container
+      h6 计分器
+      .tile
+        .title.palette-nephritis 分数表
+        table.table.rounds
+          thead
+            tr
+              td(v-repeat="names") {{$value}}
+          tbody
+            tr(v-repeat="round: rounds")
+              td(v-repeat="name: names")
+               input.form-control(type="number", v-model="round[name]", number)
+              td(style="vertical-align: middle")
+                span.fui-cross(v-on="click: remove($index)")
+        a.btn.btn-block.btn-default(v-on="click: showAddDialog")
+          i.fui-plus
+      .tile(v-if="rounds.length")
+        .title.palette-alizarin 总分
+        ul.list-group
+          li.list-group-item(v-repeat="name: names")
+            span.badge.palette-green-sea {{totalScores[name]}}
+            |{{name}}
+
+    .modal-backdrop.fade.in(v-style="display: dialogShow ? 'block' : 'none'")
+    .modal.fade.in(v-style="display: dialogShow ? 'block' : 'none'")
+      .modal-dialog
+        .modal-content
+          .modal-body
+            table.table
+              thead
+                tr
+                  td 玩家
+                  td 分数
+              tobdy
+                tr(v-repeat="name: newRound.names")
+                  td
+                    input.form-control(type="text", v-model="name")
+                  td
+                    input.form-control(type="number", v-model="newRound.scores[$index]", number)
+                  td(style="vertical-align: middle")
+                    span.fui-cross(v-on="click: removePlayer($index)")
+            a.btn.btn-default(v-on="click: addPlayer")
+              i.fui-plus
+
+          .modal-footer
+            a.btn.btn-default(v-on="click: dialogShow = false;") 取消
+            a.btn.btn-primary(v-on="click: saveRound") 保存
+
+
+  script.
+    (function() {
+      window.mah = new Vue({
+        el: '#mah_main',
+        data: {
+          rounds: [
+          ],
+          dialogShow: false,
+          newRound: {
+            names: [],
+            scores: [],
+          }
+        },
+        computed: {
+          names: function() {
+            var names = [];
+            this.rounds.forEach(function(round) {
+              names = _.union(names, Object.keys(round));
+            });
+            return names;
+          },
+          totalScores: function() {
+            var thisClass = this;
+            var scores = {};
+            thisClass.names.forEach(function(name) {
+              var score = 0;
+              thisClass.rounds.forEach(function(round) {
+                score += (round[name] || 0);
+              });
+              scores[name] = score;
+            });
+            return scores;
+          },
+        },
+        methods: {
+          reset: function() {
+            this.rounds = [];
+          },
+          remove: function(index) {
+            this.rounds.splice(index, 1);
+          },
+          saveRound: function(round) {
+            this.dialogShow = false;
+            this.rounds.push(_.object(this.newRound.names, this.newRound.scores));
+          },
+          showAddDialog: function() {
+            this.newRound.names = this.names;
+            if (this.names.length == 0) this.newRound.names = ['玩家A', '玩家B', '玩家C', '玩家D'];
+            this.newRound.scores = [];
+            this.dialogShow = true;
+          },
+          removePlayer: function(index) {
+            this.newRound.names.splice(index, 1);
+            this.newRound.scores.splice(index, 1);
+          },
+          addPlayer: function() {
+            this.newRound.names.push('');
+            this.newRound.scores.push(null);
+          },
+        }
+      });
+
+      //- Get rounds value from localStorage
+      var rounds = localStorage.getItem('rounds');
+      if (rounds) {
+        mah.$set('rounds', JSON.parse(rounds));
+      }
+
+      //- Set rounds on Vue value changes
+      mah.$watch('rounds', function(newVal) {
+        //- localStorage.setItem('rounds', JSON.stringify(newVal));
+      }, { deep: true } );
+
+    })();

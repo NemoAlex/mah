@@ -1,0 +1,50 @@
+#mah_main, #mah_main input {
+  color: #7f8c8d;
+}
+
+#mah_main .table.rounds>tbody>tr>td {
+  padding: 8px 2px;
+}
+#mah_main .table.rounds input {
+  text-align: center;
+  padding: 8px 2px;
+}
+#mah_main .table.rounds thead td {
+  font-size: 14px;
+}
+#mah_main .tile .title {
+  color: rgba(255,255,255,.8);
+  margin: -14px -14px 10px;
+  border-radius: 6px 6px 0 0;
+  font-size: 16px;
+}
+
+#mah_main .table.total {
+  text-align: left;
+}
+
+#mah_main .modal .table {
+  margin-bottom: 0;
+}
+#mah_main .modal .table td:first-child {
+  padding-left: 0;
+}
+#mah_main .modal .table td:last-child {
+  padding-right: 0;
+}
+
+#mah_main .list-group {
+  margin: 0;
+}
+#mah_main .list-group li {
+  line-height: 18px;
+  font-size: 16px;
+  text-align: left;
+}
+#mah_main .list-group li .badge {
+  background: #bdc3c7;
+}
+
+#mah_main .fui-cross {
+  color: #bdc3c7;
+}
