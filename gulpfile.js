@@ -5,6 +5,7 @@ var gulp = require('gulp')
   , rename = require('gulp-rename')
   , del = require('del')
   , jade = require('jade')
+  , minifyInline = require('gulp-minify-inline')
   ;
 
 var paths = {
@@ -41,6 +42,7 @@ gulp.task('jade', ['clean'], function() {
   return gulp.src(paths.jade)
     .pipe(gulpJade({jade: jade}))
     .pipe(rename({extname: '.html'}))
+    .pipe(minifyInline())
     .pipe(gulp.dest('build/'))
     ;
 });
