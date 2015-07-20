@@ -120,7 +120,7 @@ block content
 
       //- Set rounds on Vue value changes
       mah.$watch('rounds', function(newVal) {
-        //- localStorage.setItem('rounds', JSON.stringify(newVal));
+        localStorage.setItem('rounds', JSON.stringify(newVal));
       }, { deep: true } );
 
     })();
