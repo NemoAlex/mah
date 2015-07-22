@@ -1,7 +1,7 @@
 server {
     listen       80;
-    server_name  latino.dev;
-    root         /root/latino/build;
+    server_name  mah.dev;
+    root         /root/mah/build;
 
     gzip on;
     gzip_proxied any;
