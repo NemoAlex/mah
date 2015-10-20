@@ -10,6 +10,7 @@ input[type=text], input[type=number] {
 
 #mah_main .table.rounds>tbody>tr>td {
   padding: 8px 2px;
+  line-height: 40px;
 }
 #mah_main .table.rounds input {
   text-align: center;

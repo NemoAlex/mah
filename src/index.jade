@@ -8,9 +8,11 @@ block content
         table.table.rounds
           thead
             tr
+              td 回合
               td(v-repeat="names") {{$value}}
           tbody
             tr(v-repeat="round: rounds")
+              td {{$index + 1}}
               td(v-repeat="name: names")
                input.form-control(type="number", v-model="round[name]", number)
               td(style="vertical-align: middle")
@@ -39,7 +41,7 @@ block content
                   td
                     input.form-control(type="text", v-model="name")
                   td
-                    input.form-control(type="number", v-model="newRound.scores[$index]", number)
+                    input.form-control(type="number", v-model="newRound.scores[$index]", number, value="0")
                   td(style="vertical-align: middle")
                     span.fui-cross(v-on="click: removePlayer($index)")
             a.btn.btn-default(v-on="click: addPlayer")
